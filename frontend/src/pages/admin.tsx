@@ -38,6 +38,7 @@ const AdminPage: React.FC<PageProps<DataProps>> = ({ data }) => {
 
   const handleUpdateItem = ev => {
     ev.preventDefault()
+    console.log(ev)
 
     fetch(process.env.GATSBY_API + "/items", {
       headers: {
@@ -104,7 +105,14 @@ const AdminPage: React.FC<PageProps<DataProps>> = ({ data }) => {
               <button type="submit">
                 {editItem?.id ? "Save Changes" : "Create Item"}
               </button>
-              <button onClick={() => setEditItem(null)}>Cancel</button>
+              <button
+                onClick={ev => {
+                  ev.preventDefault()
+                  setEditItem(null)
+                }}
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>
