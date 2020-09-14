@@ -50,10 +50,16 @@ const AdminPage: React.FC<PageProps<DataProps>> = ({ data }) => {
         },
         method: editItem?.id ? "PUT" : "POST",
         body: JSON.stringify({ item: editItem }),
-      }).then(() => {
-        setEditItem(null)
-        loadItems()
       })
+        .then(res => {
+          if (res.status !== 200) {
+            alert("You don't have permission to do this.")
+            return
+          }
+          setEditItem(null)
+          loadItems()
+        })
+        .catch(() => alert("You don't have permission to do this."))
     })
   }
 
@@ -64,7 +70,11 @@ const AdminPage: React.FC<PageProps<DataProps>> = ({ data }) => {
           Authorization: `Bearer ${token}`,
         },
         method: "DELETE",
-      }).then(() => {
+      }).then(res => {
+        if (res.status !== 200) {
+          alert("You don't have permission to do this.")
+          return
+        }
         loadItems()
       })
     })
