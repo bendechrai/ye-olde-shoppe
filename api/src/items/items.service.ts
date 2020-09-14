@@ -12,22 +12,25 @@ const items: Items = {
     id: 1,
     name: "Burger",
     price: 5.99,
-    description: "Tasty",
-    image: "https://cdn.auth0.com/blog/whatabyte/burger-sm.png",
+    description:
+      "This is a tasty burger. It has all the things you'd expect, and then we stab it with a stick!",
+    image: "/images/burger.jpg",
   },
   2: {
     id: 2,
     name: "Pizza",
-    price: 2.99,
-    description: "Cheesy",
-    image: "https://cdn.auth0.com/blog/whatabyte/pizza-sm.png",
+    price: 8.99,
+    description:
+      "Round and cheese, you'll love the thin crust on this pizza. Made by a genuine human, you won't find a pizza like this anywhere else this side of right here!",
+    image: "/images/pizza.jpg",
   },
   3: {
     id: 3,
     name: "Tea",
     price: 1.99,
-    description: "Informative",
-    image: "https://cdn.auth0.com/blog/whatabyte/tea-sm.png",
+    description:
+      "Fancy a cuppa tea? We've got herbals, black teas, and even little gingerperson biscuits to go with it. Nom nom nom!",
+    image: "/images/tea.jpg",
   },
 }
 
