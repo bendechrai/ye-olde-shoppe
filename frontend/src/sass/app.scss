@@ -2,6 +2,9 @@
 
 body {
   margin: 0;
+}
+body,
+button {
   font-family: "Montserrat", sans-serif;
 }
 
@@ -53,7 +56,13 @@ header {
         li {
           margin: 0;
           padding: 0;
-          a {
+          a,
+          button {
+            border: none;
+            background-color: inherit;
+            padding: 0;
+            line-height: 2em;
+            font-size: 1em;
             text-decoration: none;
             color: white;
             &.active,

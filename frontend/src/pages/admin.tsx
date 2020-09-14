@@ -3,10 +3,13 @@ import { PageProps } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import { withAuthenticationRequired, useAuth0 } from "@auth0/auth0-react"
 
 type DataProps = {}
 
 const AdminPage: React.FC<PageProps<DataProps>> = ({ data }) => {
+  const { getAccessTokenSilently } = useAuth0()
+
   const [items, setItems] = useState([])
   const [editItem, setEditItem] = useState(null)
 
@@ -38,25 +41,32 @@ const AdminPage: React.FC<PageProps<DataProps>> = ({ data }) => {
 
   const handleUpdateItem = ev => {
     ev.preventDefault()
-    console.log(ev)
 
-    fetch(process.env.GATSBY_API + "/items", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: editItem?.id ? "PUT" : "POST",
-      body: JSON.stringify({ item: editItem }),
-    }).then(() => {
-      setEditItem(null)
-      loadItems()
+    getAccessTokenSilently().then(token => {
+      fetch(process.env.GATSBY_API + "/items", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        method: editItem?.id ? "PUT" : "POST",
+        body: JSON.stringify({ item: editItem }),
+      }).then(() => {
+        setEditItem(null)
+        loadItems()
+      })
     })
   }
 
   const handleDeleteItem = item => {
-    fetch(process.env.GATSBY_API + "/items/" + item.id, {
-      method: "DELETE",
-    }).then(() => {
-      loadItems()
+    getAccessTokenSilently().then(token => {
+      fetch(process.env.GATSBY_API + "/items/" + item.id, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        method: "DELETE",
+      }).then(() => {
+        loadItems()
+      })
     })
   }
 
@@ -173,4 +183,4 @@ const AdminPage: React.FC<PageProps<DataProps>> = ({ data }) => {
   )
 }
 
-export default AdminPage
+export default withAuthenticationRequired(AdminPage)

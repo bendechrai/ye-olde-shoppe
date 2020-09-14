@@ -6,6 +6,8 @@ import * as ItemService from "./items.service"
 import { Item } from "./item.interface"
 import { Items } from "./items.interface"
 
+import { checkJwt } from "../middleware/authz.middleware"
+
 /**
  * Router Definition
  */
@@ -43,7 +45,7 @@ itemsRouter.get("/:id", async (req: Request, res: Response) => {
 
 // POST items/
 
-itemsRouter.post("/", async (req: Request, res: Response) => {
+itemsRouter.post("/", checkJwt, async (req: Request, res: Response) => {
   try {
     const item: Item = req.body.item
 
@@ -57,7 +59,7 @@ itemsRouter.post("/", async (req: Request, res: Response) => {
 
 // PUT items/
 
-itemsRouter.put("/", async (req: Request, res: Response) => {
+itemsRouter.put("/", checkJwt, async (req: Request, res: Response) => {
   try {
     const item: Item = req.body.item
 
@@ -71,7 +73,7 @@ itemsRouter.put("/", async (req: Request, res: Response) => {
 
 // DELETE items/:id
 
-itemsRouter.delete("/:id", async (req: Request, res: Response) => {
+itemsRouter.delete("/:id", checkJwt, async (req: Request, res: Response) => {
   try {
     const id: number = parseInt(req.params.id, 10)
     await ItemService.remove(id)
