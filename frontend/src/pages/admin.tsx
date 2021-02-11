@@ -52,7 +52,8 @@ const AdminPage: React.FC<PageProps<DataProps>> = ({ data }) => {
         body: JSON.stringify({ item: editItem }),
       })
         .then(res => {
-          if (res.status !== 200) {
+          let expectedResponse = editItem?.id ? 200 : 201;
+          if (res.status !== expectedResponse) {
             alert("You don't have permission to do this.")
             return
           }
